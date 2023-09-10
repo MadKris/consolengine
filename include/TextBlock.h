@@ -12,30 +12,30 @@ protected:
     int y;
     int width;
     int textAttributes;
+    std::string text;
 public:
-    int getTextAttributes() const;
+    TextBlock(int x, int y, int width, int textAttributes, const std::string &text = "");
+
+    [[nodiscard]] int getX() const;
+
+    [[nodiscard]] int getTextAttributes() const;
 
     void setTextAttributes(int textAttributes);
 
-protected:
-    std::string text;
-public:
-    int getX() const;
-
     void setX(int x);
 
-    int getY() const;
+    [[nodiscard]] int getY() const;
 
     void setY(int y);
 
-    int getWidth() const;
+    [[nodiscard]] int getWidth() const;
 
     void setWidth(int width);
 
-    TextBlock(int x, int y, int width, int textAttributes, const std::string &text = "");
-
     void setText(const std::string &newText);
+
     [[nodiscard]] const std::string &getText() const;
+
     void renderControl(WINDOW *window, bool focused) override;
 };
 

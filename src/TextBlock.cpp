@@ -2,6 +2,9 @@
 #include "../include/TextBlock.h"
 
 void TextBlock::renderControl(WINDOW *window, bool focused) {
+    if(this->visible) {
+        return;
+    }
     wattron(window, this->textAttributes);
     for(int i = 0, line = 0; i < this->text.size(); i += width, line++) {
         mvwprintw(window, y + line, x, "%.*s\n", this->width, this->text.c_str()+i);
@@ -49,5 +52,5 @@ int TextBlock::getTextAttributes() const {
 }
 
 void TextBlock::setTextAttributes(int textAttributes) {
-    TextBlock::textAttributes = textAttributes;
+    this->textAttributes = textAttributes;
 }
