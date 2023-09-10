@@ -1,0 +1,13 @@
+
+#ifndef CONSOLE_INTERACTIVE_ENGINE_TOGGLEGROUP_H
+#define CONSOLE_INTERACTIVE_ENGINE_TOGGLEGROUP_H
+
+
+#include "Control.h"
+
+class ToggleGroup : public Control {
+
+};
+
+
+#endif //CONSOLE_INTERACTIVE_ENGINE_TOGGLEGROUP_H
