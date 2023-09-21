@@ -43,7 +43,7 @@ void Consolengine::processLogic(int input) {
     {
         delete mWindowStack.top();
         mWindowStack.pop();
-        mStoppingFlag = mWindowStack.empty(); // if WindowStack is empty - stopping the main loop. Nothing to render!
+        mStoppingFlag = mWindowStack.empty(); // if WindowStack is empty - stopping the main loop. Nothing to renderWindowBase!
     }
     else if (result.statusCode == 2) // Open new window
     {
@@ -63,7 +63,7 @@ void Consolengine::openWindow(Window *window) {
 }
 
 void Consolengine::renderScreen() {
-    mWindowStack.top()->renderWindow();
+    mWindowStack.top()->render(nullptr, false);
 }
 
 Consolengine::Consolengine(Window *rootWindow) : mStoppingFlag(false) {

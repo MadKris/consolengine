@@ -14,7 +14,6 @@ public:
 protected:
     Consolengine() : mStoppingFlag(false) {
     }
-
     virtual int handleInput();
     virtual void processLogic(int input);
     virtual void renderScreen();
@@ -22,7 +21,6 @@ protected:
 private:
     bool mStoppingFlag;
     std::stack<Window *> mWindowStack;
-
     void openWindow(Window *window);
 };
 

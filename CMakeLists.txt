@@ -1,11 +1,28 @@
 cmake_minimum_required(VERSION 3.25)
 
-project(ConsoleInteractiveEngine VERSION 0.1)
+project(ConsoleInteractiveEngine VERSION 0.3)
 
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(consolengine SHARED src/Consolengine.cpp include/Consolengine.h src/Window.cpp include/Window.h src/Button.cpp include/Button.h src/Slider.cpp include/Slider.h src/ToggleGroup.cpp include/ToggleGroup.h src/Control.cpp include/Control.h src/TextBlock.cpp include/TextBlock.h)
+add_library(consolengine SHARED
+        src/Consolengine.cpp
+        include/Consolengine.h
+        src/Window.cpp
+        include/Window.h
+        src/Button.cpp
+        include/Button.h
+        src/Slider.cpp
+        include/Slider.h
+        src/ToggleGroup.cpp
+        include/ToggleGroup.h
+        src/Control.cpp
+        include/Control.h
+        src/TextBlock.cpp
+        include/TextBlock.h
+        src/UIObject.cpp
+        include/UIObject.h
+)
 target_link_libraries(consolengine PUBLIC ncurses)
 
 install (TARGETS consolengine DESTINATION lib)
@@ -17,4 +34,5 @@ install(FILES
         include/Slider.h
         include/Consolengine.h
         include/Button.h
+        include/UIObject.h
         DESTINATION include/consolengine)

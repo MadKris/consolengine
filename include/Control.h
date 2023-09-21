@@ -4,17 +4,25 @@
 
 
 #include <ncurses.h>
+#include <vector>
+#include <functional>
+#include "UIObject.h"
 
-class Control {
+typedef void (handlerType)();
+
+typedef std::function<handlerType> handler;
+
+class Control : public UIObject {
 public:
-    virtual void renderControl(WINDOW *window, bool focused) = 0;
+    virtual void addActionHandler(handler function);
+    virtual void removeActionHandler(handler function);
+    virtual void action();
+    bool isVisible() const;
+    void setVisible(bool visible);
     virtual ~Control();
 protected:
     bool visible;
-public:
-    bool isVisible() const;
-
-    void setVisible(bool visible);
+    std::vector<handler> actionHandlers;
 };
 
 

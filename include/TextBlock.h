@@ -36,7 +36,7 @@ public:
 
     [[nodiscard]] const std::string &getText() const;
 
-    void renderControl(WINDOW *window, bool focused) override;
+    void render(WINDOW *window, bool focused) override;
 };
 
 

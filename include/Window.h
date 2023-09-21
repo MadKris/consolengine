@@ -14,7 +14,7 @@ struct WindowProcessResult {
     void *arg;
 };
 
-class Window {
+class Window : public UIObject {
 protected:
     std::vector<Control *> controls;
     Control *focusedControl{};
@@ -34,7 +34,7 @@ protected:
 public:
     Window(int width, int height, int x, int y);
     virtual WindowProcessResult processInput(int input);
-    virtual void renderWindow();
+    void render(WINDOW *win, bool focused) override;
     virtual ~Window();
 
     friend class Consolengine;

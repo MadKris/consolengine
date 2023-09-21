@@ -1,7 +1,7 @@
 
 #include "../include/TextBlock.h"
 
-void TextBlock::renderControl(WINDOW *window, bool focused) {
+void TextBlock::render(WINDOW *window, bool focused) {
     if(this->visible) {
         return;
     }

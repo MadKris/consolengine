@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "../include/Window.h"
+#include "../include/UIObject.h"
 
 Window::Window(int width, int height, int x, int y) :
         pWindow(newwin(height, width, y, x)), focusedIndex(0), focusedControl(nullptr), needsRedraw(false) {
@@ -24,12 +25,12 @@ void Window::removeControl(Control *c) {
 }
 
 
-void Window::renderWindow() {
+void Window::render(WINDOW *win, bool focused) {
     renderWindowBase();
     for(auto &control : controls)
     {
         wattrset(pWindow, windowAttributes);
-        control->renderControl(pWindow, control == focusedControl);
+        control->render(pWindow, control == focusedControl);
     }
     needsRedraw = false;
     wrefresh(pWindow);
@@ -43,6 +44,12 @@ void Window::renderWindowBase() const {
 
 
 WindowProcessResult Window::processInput(int input) {
+    if(input == KEY_ENTER || input == '\n' || input == '\r')
+    {
+        if(focusedControl != nullptr) {
+            focusedControl->action();
+        }
+    }
     return WindowProcessResult(0, nullptr);
 }
 
