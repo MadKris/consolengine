@@ -39,8 +39,10 @@ public:
     void render(WINDOW *win, bool focused) override;
     virtual ~Window();
 
-    friend class Consolengine;
+    int getHorizontalCenter();
+    int getVerticalCenter();
 
+    friend class Consolengine;
     void syncFocus();
 };
 

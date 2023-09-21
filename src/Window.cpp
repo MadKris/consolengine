@@ -98,3 +98,11 @@ void Window::close() {
     closing = true;
 }
 
+int Window::getHorizontalCenter() {
+    return getmaxx(pWindow) / 2;
+}
+
+int Window::getVerticalCenter() {
+    return getmaxy(pWindow) / 2;
+}
+
