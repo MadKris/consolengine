@@ -11,7 +11,7 @@ void Button::render(WINDOW *window, bool focused) {
     else {
         wattron(window, this->textAttributes);
     }
-    mvwprintw(window, y, x, focused ? "[ %.*s ]" : "< %.*s >", this->width - 4, this->text.c_str());
+    mvwprintw(window, y, x, focused ? "[ %.*s ]" : "< %.*s >", this->width + 4, this->text.c_str());
 }
 
 Button::Button(int x, int y, int width, int textAttributes, int focusedTextAttributes, const std::string &text) : x(x), y(y),
