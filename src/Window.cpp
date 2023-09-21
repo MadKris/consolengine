@@ -50,6 +50,10 @@ WindowProcessResult Window::processInput(int input) {
             focusedControl->action();
         }
     }
+    if(this->closing)
+    {
+        return WindowProcessResult(1, nullptr);
+    }
     return WindowProcessResult(0, nullptr);
 }
 
@@ -88,5 +92,9 @@ Window::~Window() {
 
 void Window::setRedrawFlag() {
     needsRedraw = true;
+}
+
+void Window::close() {
+    closing = true;
 }
 

@@ -22,6 +22,7 @@ protected:
     WINDOW *pWindow;
     int windowAttributes;
     bool needsRedraw;
+    bool closing;
     // We're adding raw pointer to Control instance here.
     // Once this method is called it is this class's responsibility to free given control. No need to free it manually
     virtual void addControl(Control *c);
@@ -31,6 +32,7 @@ protected:
     virtual void focusNext();
     virtual void focusPrev();
     virtual void setRedrawFlag();
+    virtual void close();
 public:
     Window(int width, int height, int x, int y);
     virtual WindowProcessResult processInput(int input);
