@@ -20,6 +20,12 @@ Button::Button(int x, int y, int width, int textAttributes, int focusedTextAttri
                                                                                                             text(text),
                                                                                                             focusedTextAttributes(
                                                                                                                     focusedTextAttributes) {}
+Button::Button(int x, int y, int textAttributes, int focusedTextAttributes, const std::string &text) : x(x), y(y),
+                                                                                                                  width(text.length()),
+                                                                                                                  textAttributes(textAttributes),
+                                                                                                                  text(text),
+                                                                                                                  focusedTextAttributes(
+                                                                                                                          focusedTextAttributes) {}
 
 const std::string &Button::getText() const {
     return text;

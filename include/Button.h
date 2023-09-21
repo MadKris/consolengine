@@ -33,6 +33,7 @@ public:
     void setFocusedTextAttributes(int focusedTextAttributes);
 
     Button(int x, int y, int width, int textAttributes, int focusedTextAttributes, const std::string &text);
+    Button(int x, int y, int textAttributes, int focusedTextAttributes, const std::string &text);
 
     void render(WINDOW *window, bool focused) override;
 
