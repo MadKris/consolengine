@@ -14,10 +14,12 @@ typedef std::function<handlerType> handler;
 
 class Control : public UIObject {
 public:
+    Control();
+
     virtual void addActionHandler(handler function);
     virtual void removeActionHandler(handler function);
     virtual void action();
-    bool isVisible() const;
+    [[nodiscard]] bool isVisible() const;
     void setVisible(bool visible);
     virtual ~Control();
 protected:

@@ -2,7 +2,7 @@
 #include "../include/TextBlock.h"
 
 void TextBlock::render(WINDOW *window, bool focused) {
-    if(this->visible) {
+    if(!this->visible) {
         return;
     }
     wattron(window, this->textAttributes);

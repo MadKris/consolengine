@@ -28,3 +28,5 @@ void Control::removeActionHandler(handler function) {
         return  function.target<handlerType>() == a.template target<handlerType>();
     }));
 }
+
+Control::Control() : visible(true) {}
