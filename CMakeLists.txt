@@ -22,6 +22,7 @@ add_library(consolengine SHARED
         include/TextBlock.h
         src/UIObject.cpp
         include/UIObject.h
+        include/windowProcessResult.h
 )
 target_link_libraries(consolengine PUBLIC ncurses)
 
@@ -35,4 +36,5 @@ install(FILES
         include/Consolengine.h
         include/Button.h
         include/UIObject.h
+        include/windowProcessResult.h
         DESTINATION include/consolengine)

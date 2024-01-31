@@ -7,7 +7,7 @@ void TextBlock::render(WINDOW *window, bool focused) {
     }
     wattron(window, this->textAttributes);
     for(int i = 0, line = 0; i < this->text.size(); i += width, line++) {
-        mvwprintw(window, y + line, x, "%.*s\n", this->width, this->text.c_str()+i);
+        mvwprintw(window, y + line, x, "%.*s", this->width, this->text.c_str()+i);
     }
 }
 
@@ -21,7 +21,8 @@ void TextBlock::setText(const std::string &newText) {
 }
 
 TextBlock::TextBlock(int x, int y, int width, int textAttributes, const std::string &text)
-        : x(x), y(y), width(width), textAttributes(textAttributes), text(text) {}
+        : x(x), y(y), width(width), textAttributes(textAttributes), text(text) {
+}
 
 int TextBlock::getX() const {
     return x;

@@ -3,17 +3,20 @@
 #include "../include/UIObject.h"
 
 Window::Window(int width, int height, int x, int y) :
-        pWindow(newwin(height, width, y, x)), focusedIndex(0), focusedControl(nullptr), needsRedraw(false) {
+        pWindow(newwin(height, width, y, x)), focusedIndex(0), focusedControl(nullptr), needsRedraw(false), closing(false) {
     windowAttributes = A_NORMAL;
 }
 
 
 void Window::addControl(Control *c) {
-    if(std::find(controls.begin(), controls.end(), c) == controls.end())
+    if(std::find(controls.begin(), controls.end(), c) != controls.end())
     {
         return;
     }
     controls.push_back(c);
+    // Some weird code that will reset focus to focusable element
+    focusNext();
+    focusPrev();
 }
 void Window::removeControl(Control *c) {
     auto found = std::find(controls.begin(), controls.end(), c);
@@ -38,32 +41,50 @@ void Window::render(WINDOW *win, bool focused) {
 
 void Window::renderWindowBase() const {
     wattrset(pWindow, windowAttributes);
-    wbkgd(pWindow, COLOR_BLACK);
+    if(needsRedraw) {
+        werase(pWindow);
+    }
     box(pWindow, 0, 0);
+    wrefresh(pWindow);
 }
 
 
 WindowProcessResult Window::processInput(int input) {
-    if(input == KEY_ENTER || input == '\n' || input == '\r')
-    {
-        if(focusedControl != nullptr) {
-            focusedControl->action();
-        }
+    switch (input) {
+        case KEY_UP:
+            focusPrev();
+            break;
+        case KEY_DOWN:
+            focusNext();
+            break;
+        case KEY_ENTER:
+        case '\n':
+        case '\r':
+            if(focusedControl != nullptr) {
+                focusedControl->action();
+            }
+            break;
     }
     if(this->closing)
     {
-        return WindowProcessResult(1, nullptr);
+        return WindowProcessResult(WINDOW_STATUS_CLOSE, nullptr);
     }
-    return WindowProcessResult(0, nullptr);
+    return WindowProcessResult(WINDOW_STATUS_OK, nullptr);
 }
 
 void Window::focusPrev() {
-    focusedIndex--;
-    if(focusedIndex < 0)
+    if(controls.empty())
     {
-        focusedIndex = controls.size() - 1;
+        return;
     }
-    syncFocus();
+    int initialFocus = focusedIndex;
+    do {
+        focusedIndex--;
+        if (focusedIndex < 0) {
+            focusedIndex = controls.size() - 1;
+        }
+        syncFocus();
+    } while(focusedIndex != initialFocus && !focusedControl->isFocusable());
 }
 
 void Window::syncFocus() {
@@ -74,12 +95,18 @@ void Window::syncFocus() {
 }
 
 void Window::focusNext() {
-    focusedIndex++;
-    if(focusedIndex >= controls.size())
+    if(controls.empty())
     {
-        focusedIndex = 0;
+        return;
     }
-    syncFocus();
+    int initialFocus = focusedIndex;
+    do {
+        focusedIndex++;
+        if (focusedIndex >= controls.size()) {
+            focusedIndex = 0;
+        }
+        syncFocus();
+    } while(initialFocus != focusedIndex && !focusedControl->isFocusable());
 }
 
 Window::~Window() {

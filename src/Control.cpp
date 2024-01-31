@@ -29,4 +29,14 @@ void Control::removeActionHandler(handler function) {
     }));
 }
 
-Control::Control() : visible(true) {}
+Control::Control(bool visible, bool focusable) : visible(visible), focusable(focusable) {}
+
+bool Control::isFocusable() const {
+    return focusable;
+}
+
+void Control::setFocusable(bool focusable) {
+    this->focusable = focusable;
+}
+
+

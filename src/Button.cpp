@@ -15,17 +15,13 @@ void Button::render(WINDOW *window, bool focused) {
 }
 
 Button::Button(int x, int y, int width, int textAttributes, int focusedTextAttributes, const std::string &text) : x(x), y(y),
-                                                                                                            width(width),
-                                                                                                            textAttributes(textAttributes),
-                                                                                                            text(text),
-                                                                                                            focusedTextAttributes(
-                                                                                                                    focusedTextAttributes) {}
+    width(width), textAttributes(textAttributes), text(text), focusedTextAttributes(focusedTextAttributes),
+    Control(true, true)
+    {}
 Button::Button(int x, int y, int textAttributes, int focusedTextAttributes, const std::string &text) : x(x), y(y),
-                                                                                                                  width(text.length()),
-                                                                                                                  textAttributes(textAttributes),
-                                                                                                                  text(text),
-                                                                                                                  focusedTextAttributes(
-                                                                                                                          focusedTextAttributes) {}
+    width(text.length()), textAttributes(textAttributes), text(text), focusedTextAttributes(focusedTextAttributes),
+    Control(true, true)
+    {}
 
 const std::string &Button::getText() const {
     return text;

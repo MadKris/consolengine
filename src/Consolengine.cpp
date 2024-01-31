@@ -18,7 +18,7 @@ int Consolengine::runGameLoop() {
             renderScreen();
             int input = handleInput();
             processLogic(input);
-            std::this_thread::sleep_for(2ms);
+            std::this_thread::sleep_for(2ms); // Give CPU to other apps, ~500 fps is fast enough
         }
     }
     catch (std::exception &e)
@@ -35,24 +35,25 @@ int Consolengine::handleInput() {
 
 void Consolengine::processLogic(int input) {
     auto result = mWindowStack.top()->processInput(input);
-    if(result.statusCode == 0) // OK
-    {
-        return;
-    }
-    if(result.statusCode == 1) // Closed
-    {
-        delete mWindowStack.top();
-        mWindowStack.pop();
-        mStoppingFlag = mWindowStack.empty(); // if WindowStack is empty - stopping the main loop. Nothing to renderWindowBase!
-    }
-    else if (result.statusCode == 2) // Open new window
-    {
-        auto window = reinterpret_cast<Window *>(result.arg);
-        if(window == nullptr)
-        {
-            throw std::invalid_argument("Invalid argument: Window * expected");
-        }
-        openWindow(window);
+    switch (result.statusCode) {
+
+        case WINDOW_STATUS_OK:
+            return;
+        case WINDOW_STATUS_CLOSE:
+            clear();
+            refresh();
+            delete mWindowStack.top();
+            mWindowStack.pop();
+            mStoppingFlag = mWindowStack.empty(); // if WindowStack is empty - stopping the main loop. Nothing to render!
+            break;
+        case WINDOW_STATUS_OPEN_NEW:
+            auto window = reinterpret_cast<Window *>(result.arg);
+            if(window == nullptr)
+            {
+                throw std::invalid_argument("Invalid argument: Window * expected");
+            }
+            openWindow(window);
+            break;
     }
 }
 
