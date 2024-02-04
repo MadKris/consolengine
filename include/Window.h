@@ -6,7 +6,7 @@
 #include <vector>
 #include <ncurses.h>
 #include "Control.h"
-#include "windowProcessResult.h"
+#include "WindowProcessResult.h"
 
 #define ctrl(x) ((x) & 0x1f)
 

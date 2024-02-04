@@ -2,15 +2,14 @@
 #include "../include/Window.h"
 #include "../include/UIObject.h"
 
-Window::Window(int width, int height, int x, int y) :
-        pWindow(newwin(height, width, y, x)), focusedIndex(0), focusedControl(nullptr), needsRedraw(false), closing(false) {
+Window::Window(int width, int height, int x, int y) : pWindow(newwin(height, width, y, x)), focusedIndex(0),
+                                                      focusedControl(nullptr), needsRedraw(false), closing(false) {
     windowAttributes = A_NORMAL;
 }
 
 
 void Window::addControl(Control *c) {
-    if(std::find(controls.begin(), controls.end(), c) != controls.end())
-    {
+    if (std::find(controls.begin(), controls.end(), c) != controls.end()) {
         return;
     }
     controls.push_back(c);
@@ -18,10 +17,10 @@ void Window::addControl(Control *c) {
     focusNext();
     focusPrev();
 }
+
 void Window::removeControl(Control *c) {
     auto found = std::find(controls.begin(), controls.end(), c);
-    if(found == controls.end())
-    {
+    if (found == controls.end()) {
         return;
     }
     controls.erase(found);
@@ -30,8 +29,7 @@ void Window::removeControl(Control *c) {
 
 void Window::render(WINDOW *win, bool focused) {
     renderWindowBase();
-    for(auto &control : controls)
-    {
+    for (auto &control: controls) {
         wattrset(pWindow, windowAttributes);
         control->render(pWindow, control == focusedControl);
     }
@@ -41,7 +39,7 @@ void Window::render(WINDOW *win, bool focused) {
 
 void Window::renderWindowBase() const {
     wattrset(pWindow, windowAttributes);
-    if(needsRedraw) {
+    if (needsRedraw) {
         werase(pWindow);
     }
     box(pWindow, 0, 0);
@@ -50,6 +48,9 @@ void Window::renderWindowBase() const {
 
 
 WindowProcessResult Window::processInput(int input) {
+    if (focusedControl != nullptr) {
+        focusedControl->processInput(input);
+    }
     switch (input) {
         case KEY_UP:
             focusPrev();
@@ -57,24 +58,15 @@ WindowProcessResult Window::processInput(int input) {
         case KEY_DOWN:
             focusNext();
             break;
-        case KEY_ENTER:
-        case '\n':
-        case '\r':
-            if(focusedControl != nullptr) {
-                focusedControl->action();
-            }
-            break;
     }
-    if(this->closing)
-    {
+    if (this->closing) {
         return WindowProcessResult(WINDOW_STATUS_CLOSE, nullptr);
     }
     return WindowProcessResult(WINDOW_STATUS_OK, nullptr);
 }
 
 void Window::focusPrev() {
-    if(controls.empty())
-    {
+    if (controls.empty()) {
         return;
     }
     int initialFocus = focusedIndex;
@@ -84,19 +76,18 @@ void Window::focusPrev() {
             focusedIndex = controls.size() - 1;
         }
         syncFocus();
-    } while(focusedIndex != initialFocus && !focusedControl->isFocusable());
+    } while (focusedIndex != initialFocus && !focusedControl->isFocusable());
 }
 
 void Window::syncFocus() {
-    if(controls.empty()) {
+    if (controls.empty()) {
         return;
     }
     focusedControl = controls.at(focusedIndex);
 }
 
 void Window::focusNext() {
-    if(controls.empty())
-    {
+    if (controls.empty()) {
         return;
     }
     int initialFocus = focusedIndex;
@@ -106,12 +97,11 @@ void Window::focusNext() {
             focusedIndex = 0;
         }
         syncFocus();
-    } while(initialFocus != focusedIndex && !focusedControl->isFocusable());
+    } while (initialFocus != focusedIndex && !focusedControl->isFocusable());
 }
 
 Window::~Window() {
-    for(auto &control : controls)
-    {
+    for (auto &control: controls) {
         delete control;
     }
     delwin(pWindow);
@@ -132,4 +122,3 @@ int Window::getHorizontalCenter() {
 int Window::getVerticalCenter() {
     return getmaxy(pWindow) / 2;
 }
-

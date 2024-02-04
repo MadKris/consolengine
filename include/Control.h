@@ -15,14 +15,25 @@ typedef std::function<handlerType> handler;
 class Control : public UIObject {
 public:
     explicit Control(bool visible = true, bool focusable = false);
+
     virtual void addActionHandler(handler function);
+
     virtual void removeActionHandler(handler function);
+
     virtual void action();
+
+    virtual void processInput(int input);
+
     [[nodiscard]] bool isVisible() const;
+
     void setVisible(bool visible);
+
     [[nodiscard]] bool isFocusable() const;
+
     void setFocusable(bool focusable);
+
     virtual ~Control();
+
 protected:
     bool focusable;
     bool visible;
