@@ -4,8 +4,7 @@
 #include "../include/Slider.h"
 
 Slider::Slider(int minValue, int maxValue, int step, int value, int size, int x, int y, int defaultAttributes,
-               int focusedAttributes, int defaultHandleAttributes, int focusedHandleAttributes, bool printLabels,
-               bool visible)
+               int focusedAttributes, bool printLabels, bool visible)
         : Control(visible, true),
           value(value),
           minValue(minValue),
@@ -15,8 +14,6 @@ Slider::Slider(int minValue, int maxValue, int step, int value, int size, int x,
           y(y),
           defaultAttributes(defaultAttributes),
           focusedAttributes(focusedAttributes),
-          defaultHandleAttributes(defaultHandleAttributes),
-          focusedHandleAttributes(focusedHandleAttributes),
           printingLabels(printLabels) {
     checkBounds(minValue, maxValue, step, value);
 }
@@ -44,9 +41,6 @@ void Slider::render(WINDOW *window, bool focused) {
     wattron(window, focused ? focusedAttributes : defaultAttributes);
     int sliderFill = ((float) (value - minValue) / (maxValue - minValue)) * (size - 2);
     mvwprintw(window, y, x, "[%s%*s]", std::string(sliderFill, '|').c_str(), size - 2 - sliderFill, "");
-
-    wattron(window, focused ? focusedHandleAttributes : defaultHandleAttributes);
-    mvwprintw(window, y, x + 1 + sliderFill, "O");
 }
 
 void Slider::incrementValue() {
@@ -132,22 +126,6 @@ int Slider::getFocusedAttributes() const {
 
 void Slider::setFocusedAttributes(int focusedAttributes) {
     Slider::focusedAttributes = focusedAttributes;
-}
-
-int Slider::getDefaultHandleAttributes() const {
-    return defaultHandleAttributes;
-}
-
-void Slider::setDefaultHandleAttributes(int defaultHandleAttributes) {
-    Slider::defaultHandleAttributes = defaultHandleAttributes;
-}
-
-int Slider::getFocusedHandleAttributes() const {
-    return focusedHandleAttributes;
-}
-
-void Slider::setFocusedHandleAttributes(int focusedHandleAttributes) {
-    Slider::focusedHandleAttributes = focusedHandleAttributes;
 }
 
 bool Slider::isPrintingLabels() const {

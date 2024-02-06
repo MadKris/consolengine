@@ -8,8 +8,7 @@
 class Slider : public Control {
 public:
     Slider(int minValue, int maxValue, int step, int value, int size, int x, int y, int defaultAttributes,
-           int focusedAttributes, int defaultHandleAttributes, int focusedHandleAttributes, bool printLabels = false,
-           bool visible = true);
+           int focusedAttributes, bool printLabels, bool visible = true);
 
 protected:
     int value;
@@ -21,8 +20,6 @@ protected:
     int y;
     int defaultAttributes;
     int focusedAttributes;
-    int defaultHandleAttributes;
-    int focusedHandleAttributes;
     bool printingLabels;
 public:
     void render(WINDOW *window, bool focused) override;
@@ -64,14 +61,6 @@ public:
     [[nodiscard]] int getFocusedAttributes() const;
 
     void setFocusedAttributes(int focusedAttributes);
-
-    [[nodiscard]] int getDefaultHandleAttributes() const;
-
-    void setDefaultHandleAttributes(int defaultHandleAttributes);
-
-    [[nodiscard]] int getFocusedHandleAttributes() const;
-
-    void setFocusedHandleAttributes(int focusedHandleAttributes);
 
     [[nodiscard]] bool isPrintingLabels() const;
 
