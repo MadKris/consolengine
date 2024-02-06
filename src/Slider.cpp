@@ -34,6 +34,9 @@ void Slider::checkBounds(int minValue, int maxValue, int step, int value) {
 }
 
 void Slider::render(WINDOW *window, bool focused) {
+    if (!visible) {
+        return;
+    }
     if (printingLabels) {
         wattron(window, defaultAttributes);
         mvwprintw(window, y + 1, x, "%-*d%*d", size / 2, minValue, size - size / 2, maxValue);
