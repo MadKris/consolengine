@@ -23,7 +23,7 @@ protected:
     int focusedAttributes;
     int defaultHandleAttributes;
     int focusedHandleAttributes;
-    bool printLabels;
+    bool printingLabels;
 public:
     void render(WINDOW *window, bool focused) override;
 
@@ -32,6 +32,52 @@ public:
     void incrementValue();
 
     void decrementValue();
+
+    [[nodiscard]] int getValue() const;
+
+    void setValue(int value);
+
+    [[nodiscard]] int getMinValue() const;
+
+    [[nodiscard]] int getMaxValue() const;
+
+    [[nodiscard]] int getStep() const;
+
+    void updateBounds(int minValue, int maxValue, int step, int value);
+
+    [[nodiscard]] int getSize() const;
+
+    void setSize(int size);
+
+    [[nodiscard]] int getX() const;
+
+    void setX(int x);
+
+    [[nodiscard]] int getY() const;
+
+    void setY(int y);
+
+    [[nodiscard]] int getDefaultAttributes() const;
+
+    void setDefaultAttributes(int defaultAttributes);
+
+    [[nodiscard]] int getFocusedAttributes() const;
+
+    void setFocusedAttributes(int focusedAttributes);
+
+    [[nodiscard]] int getDefaultHandleAttributes() const;
+
+    void setDefaultHandleAttributes(int defaultHandleAttributes);
+
+    [[nodiscard]] int getFocusedHandleAttributes() const;
+
+    void setFocusedHandleAttributes(int focusedHandleAttributes);
+
+    [[nodiscard]] bool isPrintingLabels() const;
+
+    void setPrintingLabels(bool printingLabels);
+
+    static void checkBounds(int minValue, int maxValue, int step, int value);
 };
 
 
