@@ -29,7 +29,7 @@ add_library(consolengine SHARED
 )
 target_link_libraries(consolengine PUBLIC ncurses)
 
-add_subdirectory(testProject)
+add_subdirectory(demoProject)
 
 install(TARGETS consolengine DESTINATION lib)
 install(FILES
