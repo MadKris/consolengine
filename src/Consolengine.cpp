@@ -6,7 +6,6 @@
 #include "../include/Consolengine.h"
 
 
-
 int Consolengine::run() {
     return runGameLoop();
 }
@@ -21,9 +20,9 @@ int Consolengine::runGameLoop() {
             std::this_thread::sleep_for(2ms); // Give CPU to other apps, ~500 fps is fast enough
         }
     }
-    catch (std::exception &e)
-    {
-        std::cerr << " [Game Loop] : Exception: " << e.what();
+    catch (std::exception &e) {
+        erase();
+        mvprintw(0, 0, " [Game Loop] : Exception: %s", e.what());
         return -1;
     }
     return 0;
@@ -48,8 +47,7 @@ void Consolengine::processLogic(int input) {
             break;
         case WINDOW_STATUS_OPEN_NEW:
             auto window = reinterpret_cast<Window *>(result.arg);
-            if(window == nullptr)
-            {
+            if (window == nullptr) {
                 throw std::invalid_argument("Invalid argument: Window * expected");
             }
             openWindow(window);
@@ -72,8 +70,7 @@ Consolengine::Consolengine(Window *rootWindow) : mStoppingFlag(false) {
 }
 
 Consolengine::~Consolengine() {
-    while(!mWindowStack.empty())
-    {
+    while (!mWindowStack.empty()) {
         delete mWindowStack.top();
         mWindowStack.pop();
     }
