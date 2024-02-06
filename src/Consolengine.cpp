@@ -11,7 +11,9 @@ int Consolengine::run() {
 }
 
 int Consolengine::runGameLoop() {
+#ifndef NDEBUG
     try {
+#endif
         using namespace std::chrono_literals;
         while (!this->mStoppingFlag) {
             renderScreen();
@@ -19,12 +21,14 @@ int Consolengine::runGameLoop() {
             processLogic(input);
             std::this_thread::sleep_for(2ms); // Give CPU to other apps, ~500 fps is fast enough
         }
+#ifndef NDEBUG
     }
     catch (std::exception &e) {
         erase();
         mvprintw(0, 0, " [Game Loop] : Exception: %s", e.what());
         return -1;
     }
+#endif
     return 0;
 }
 
