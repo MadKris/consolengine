@@ -42,7 +42,7 @@ void Slider::render(WINDOW *window, bool focused) {
         mvwprintw(window, y + 1, x, "%-*d%*d", size / 2, minValue, size - size / 2, maxValue);
     }
     wattron(window, focused ? focusedAttributes : defaultAttributes);
-    int sliderFill = ((float) (value - maxValue) / (maxValue - minValue)) * (size - 2);
+    int sliderFill = ((float) (value - minValue) / (maxValue - minValue)) * (size - 2);
     mvwprintw(window, y, x, "[%s%*s]", std::string(sliderFill, '|').c_str(), size - 2 - sliderFill, "");
 
     wattron(window, focused ? focusedHandleAttributes : defaultHandleAttributes);
