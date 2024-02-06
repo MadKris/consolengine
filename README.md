@@ -87,9 +87,9 @@ Right now you can use these controls:
 * Button
 * TextBlock
 * Toggle
+* Slider
 
 Planned controls:
 
-* Slider
 * Radio button
 * Panel (not sure yet)
